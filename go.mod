@@ -1,4 +1,4 @@
-module verify-regsan-api
+module regsan-check
 
 go 1.14
 

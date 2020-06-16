@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
-	// "verify-regsan-api/csvreader"
-	"verify-regsan-api/gsheetsreader"
+	// "regsan-check/csvreader"
+	"regsan-check/gsheetsreader"
 )
 
 
