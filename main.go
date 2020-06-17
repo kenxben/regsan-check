@@ -30,12 +30,12 @@ func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Println("$PORT not set, defaulting to 8080")
-		port = ":8080"
+		port = "8080"
 	}
 	
 	r := mux.NewRouter()
 	api := r.PathPrefix("/api/v1").Subrouter()
 	api.HandleFunc("/{NSO}/", buscarNSO).Methods(http.MethodGet)
-	fmt.Printf("Serving at localhost%s", port)
-	log.Fatal(http.ListenAndServe(port, r))
+	fmt.Printf("Serving at localhost :%s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }

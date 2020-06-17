@@ -30,7 +30,7 @@ func GetData(spreadsheetId string) map[string]Producto {
 	if err != nil {
 		// log.Fatalf("Unable to read client secret file: %v", err)
 		log.Printf("Unable to read client secret file: %v.", err)
-		log.Println("Looking for env variables...")
+		log.Println("Looking for client secret in env variables...")
 		creds = []byte(os.Getenv(key))
 
 	}
