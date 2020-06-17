@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
+
+var key = "GOOGLE_CREDENTIALS" 
 
 type Producto struct {
     NSO string `json:"RegSan/NSO"`
@@ -25,7 +28,11 @@ func GetData(spreadsheetId string) map[string]Producto {
 
 	creds, err := ioutil.ReadFile("keys/verifynso-dd9a44c0a761.json")
 	if err != nil {
-		log.Fatalf("Unable to read client secret file: %v", err)
+		// log.Fatalf("Unable to read client secret file: %v", err)
+		log.Printf("Unable to read client secret file: %v.", err)
+		log.Println("Looking for env variables...")
+		creds = []byte(os.Getenv(key))
+
 	}
 
 	srv := getService(creds)
