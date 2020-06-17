@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	// "regsan-check/csvreader"
 	"regsan-check/gsheetsreader"
+	"os"
 )
 
 
@@ -26,7 +27,12 @@ func init() {
 func main() {
 
 	// Serve api
-	port := ":8080"
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Println("$PORT not set, defaulting to 8080")
+		port = ":8080"
+	}
+	
 	r := mux.NewRouter()
 	api := r.PathPrefix("/api/v1").Subrouter()
 	api.HandleFunc("/{NSO}/", buscarNSO).Methods(http.MethodGet)
