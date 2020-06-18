@@ -34,8 +34,8 @@ func main() {
 	}
 	
 	r := mux.NewRouter()
-	api := r.PathPrefix("/api/v1").Subrouter()
+	api := r.PathPrefix("/check-nso").Subrouter()
 	api.HandleFunc("/{NSO}/", buscarNSO).Methods(http.MethodGet)
-	fmt.Printf("Serving at localhost :%s\n", port)
+	fmt.Printf("Serving at port:%s\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
