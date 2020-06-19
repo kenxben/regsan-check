@@ -13,7 +13,7 @@ import (
 func buscarNSO(w http.ResponseWriter, r *http.Request) {
 
     vars := mux.Vars(r)
-    w.Header().Set("Content-Type", "application/json")
+    w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
     // search NSO in query
     if key, ok := vars["NSO"]; ok {
