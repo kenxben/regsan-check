@@ -1,28 +1,24 @@
 package main
 
-
 import (
 	"fmt"
 	"log"
 	"net/http"
-	"github.com/gorilla/mux"
-	// "regsan-check/csvreader"
-	"regsan-check/gsheetsreader"
 	"os"
+	"regsan-check/nso"
+
+	"github.com/gorilla/mux"
 )
 
-
-// var Productos map[string]csvreader.Producto
-var Productos map[string]gsheetsreader.Producto
-
+// map for product data using nso keys
+var productos nso.TablaProductos
 
 func init() {
-
+	// initialize productos map
 	// Read data from spreadsheet using its id
-	// Example sheet https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-	Productos = gsheetsreader.GetData("1fM4UC4Y9uxkzJxIKFnW0h_YVAlB5qQ2cQdl4VuxmnnA")
+	sheetID := "1fM4UC4Y9uxkzJxIKFnW0h_YVAlB5qQ2cQdl4VuxmnnA"
+	productos = nso.GetDataFromGsheet(sheetID)
 }
-
 
 func main() {
 
@@ -32,10 +28,15 @@ func main() {
 		log.Println("$PORT not set, defaulting to 8080")
 		port = "8080"
 	}
-	
+
 	r := mux.NewRouter()
-	api := r.PathPrefix("/check-nso").Subrouter()
-	api.HandleFunc("/{NSO}/", buscarNSO).Methods(http.MethodGet)
+	h := nso.NewHandler(&productos)
+
+	r.Queries(
+		"nso", "[a-zA-z0-9-\\s]+",
+		"nombre", "[a-zA-z0-9\\s]+",
+	)
+	r.Handle("/check-nso", h).Methods(http.MethodGet)
 	fmt.Printf("Serving at port:%s\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
