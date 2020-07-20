@@ -34,7 +34,7 @@ func main() {
 
 	r.Queries(
 		"nso", "[a-zA-z0-9-\\s]+",
-		"nombre", "[a-zA-z0-9\\s]+",
+		"producto", "",
 	)
 	r.Handle("/check-nso", h).Methods(http.MethodGet)
 	fmt.Printf("Serving at port:%s\n", port)
