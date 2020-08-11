@@ -16,6 +16,7 @@ type Producto struct {
 	Titular        string `json:"Titular"`
 	FechaEmision   string `json:"FechaEmision"`
 	FechaVigencia  string `json:"FechaVigencia"`
+	TipoProducto   string `json:"TipoProducto"`
 }
 
 type TablaProductos map[string]Producto
@@ -58,11 +59,10 @@ func GetDataFromGsheet(spreadsheetId string) TablaProductos {
 		for _, row := range sheetdata.Values {
 
 			// Parse values to strings
-			record := make([]string, 6)
+			record := make([]string, 7)
 
 			for j := 0; j < len(row); j++ {
 				record[j] = row[j].(string)
-
 			}
 
 			// save strings to map
@@ -73,6 +73,7 @@ func GetDataFromGsheet(spreadsheetId string) TablaProductos {
 				Titular:        record[3],
 				FechaEmision:   record[4],
 				FechaVigencia:  record[5],
+				TipoProducto:   record[6],
 			}
 
 			// use only first rows as example

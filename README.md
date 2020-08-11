@@ -44,3 +44,4 @@ Currently, only cosmetic products data is included in a mirror database used for
 * Titular: NSO holder (person or company)
 * FechaEmision: Issue date
 * FechaVigencia: Validity date
+* TipoProducto: Product type (cosmetic, drug, etc.)
